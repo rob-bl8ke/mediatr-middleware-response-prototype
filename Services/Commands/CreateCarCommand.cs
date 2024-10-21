@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Services.Models;
+using Services.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Commands
 {
-    public class CreateCarCommand : BaseRequest, IRequest<Response<Car>>
+    public class CreateCarCommand : BaseRequest, IRequestWrapper<Car>
     {
         public CreateCarCommand()
         {
@@ -18,7 +19,7 @@ namespace Services.Commands
         }
     }
 
-    public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, Response<Car>>
+    public class CreateCarCommandHandler : IHandlerWrapper<CreateCarCommand, Car>
     {
         public async Task<Response<Car>> Handle(CreateCarCommand request, CancellationToken cancellationToken)
         {
@@ -27,7 +28,6 @@ namespace Services.Commands
             Console.WriteLine(request.UserId);
 
             var success = true;
-            // var success = false;
 
             if (!success)
             {

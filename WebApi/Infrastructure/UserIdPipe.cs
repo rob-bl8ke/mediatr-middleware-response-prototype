@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Services;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,15 @@ namespace WebApi.Infrastructure
                 br.UserId = userId;
             }
 
-            return await next();
+            // Obviously do not want to create a dependency to Response<Car> here, but just shows you that
+            // you can get to the data. You can break this out into a chained Pipe etc...
+            var result = await next();
+            if (result is Response<Car> carResponse)
+            {
+                Console.WriteLine("Car is coming back");
+            }
+
+            return result;
         }
     }
 }

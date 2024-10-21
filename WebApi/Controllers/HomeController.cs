@@ -30,7 +30,8 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// You can test this using something lie Postman
+        /// You can test this using something like Postman
+        /// POST https://localhost:44344/cars
         /// </summary>
         [HttpPost]
         public Task<Response<Car>> CreateCar()
