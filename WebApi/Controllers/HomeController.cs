@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 using Services.Commands;
 using Services.Models;
 using Services.Queries;
@@ -28,11 +29,12 @@ namespace WebApi.Controllers
             return mediator.Send(new GetAllCarsQuery());
         }
 
+        /// <summary>
+        /// You can test this using something lie Postman
+        /// </summary>
         [HttpPost]
-        public Task<string> CreateCar()
+        public Task<Response<Car>> CreateCar()
         {
-            // var claim = User.Claims;
-
             return mediator.Send(new CreateCarCommand());
         }
     }
