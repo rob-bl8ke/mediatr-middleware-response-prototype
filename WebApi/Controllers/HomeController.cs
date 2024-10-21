@@ -31,6 +31,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public Task<string> CreateCar()
         {
+            // var claim = User.Claims;
 
             return mediator.Send(new CreateCarCommand());
         }

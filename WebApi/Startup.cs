@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Queries;
+using WebApi.Infrastructure;
 
 namespace WebApi
 {
@@ -16,7 +17,18 @@ namespace WebApi
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            // 
+            // In order to get to HttpContext via UserIdPipe
             services.AddHttpContextAccessor();
+
+            //
+            // A bit weird but this is how you'd inject a generic interface (for your pipe)
+            // You could obviously stack these pipes up.
+            // Order processed is from top to bottom and is important if one relies on another
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UserIdPipe<,>));
+            // services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AnotherPipe<,>));
+            // services.AddScoped(typeof(IPipelineBehavior<,>), typeof(YetAnotherPipe<,>));
+
 
             //
             // Made possible by MediatR.Extensions.Microsoft.DependencyInjection package.

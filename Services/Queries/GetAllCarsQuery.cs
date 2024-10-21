@@ -9,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace Services.Queries
 {
-    public class GetAllCarsQuery : IRequest<IEnumerable<Car>>
+    public class GetAllCarsQuery : BaseRequest, IRequest<IEnumerable<Car>>
     {
+        public GetAllCarsQuery()
+        {
+            // from middleware... see UserIdPipe
+            // However it is NOT available at this point... so good to initialize values???
+            Console.WriteLine(base.UserId);
+        }
     }
 
     // IRequestHandler<Unit, ...> <---- if returning nothing
@@ -24,6 +30,9 @@ namespace Services.Queries
 
         public async Task<IEnumerable<Car>> Handle(GetAllCarsQuery request, CancellationToken cancellationToken)
         {
+            // At this point your Middleware data will be available...
+            Console.WriteLine(request.UserId);
+
             var cars = new []
             {
                 new Car{ Name = "Ferrari" },
